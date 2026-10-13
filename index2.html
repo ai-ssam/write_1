@@ -171,6 +171,8 @@
     .btn.danger { color: #8a1c1c; background: #f6e3e3; }
 
     .hidden { display: none !important; }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-bottom: 12px; }
+    .check-grid .check { margin: 0; }
 
     .preview {
       height: 100vh;
@@ -314,7 +316,7 @@
       top: 50%;
       z-index: 1;
       color: var(--gcolor);
-      font-family: var(--gfont), "NanumSquareRound", sans-serif;
+      font-family: var(--gfont), "Noto Sans KR", "NanumSquareRound", sans-serif;
       font-size: var(--gsize);
       line-height: 1;
       text-align: center;
@@ -334,14 +336,14 @@
 
     /* 따라쓰기 스타일 */
     .t-trace .char { color: var(--tcolor); }
-    .ts-light .t-trace { opacity: 0.38; }
+    .ts-light .t-trace .char, .ts-light .t-trace .ltext { opacity: 0.38; }
     .ts-outline .t-trace .char, .ts-outline .t-trace .ltext {
       color: transparent;
       -webkit-text-stroke: 0.6px var(--tcolor);
     }
-    .ts-fade .t-trace.tr-1 { opacity: 0.6; }
-    .ts-fade .t-trace.tr-2 { opacity: 0.35; }
-    .ts-fade .t-trace.tr-3 { opacity: 0.18; }
+    .ts-fade .t-trace.tr-1 .char, .ts-fade .t-trace.tr-1 .ltext { opacity: 0.6; }
+    .ts-fade .t-trace.tr-2 .char, .ts-fade .t-trace.tr-2 .ltext { opacity: 0.35; }
+    .ts-fade .t-trace.tr-3 .char, .ts-fade .t-trace.tr-3 .ltext { opacity: 0.18; }
 
     /* ---------- 가로줄 ---------- */
     .lines { width: 100%; }
@@ -373,7 +375,7 @@
       left: 0;
       bottom: calc(var(--pitch) * 0.14);
       color: #6b7280;
-      font-family: var(--gfont), "NanumSquareRound", sans-serif;
+      font-family: var(--gfont), "Noto Sans KR", "NanumSquareRound", sans-serif;
       font-size: calc(var(--gsize) * 0.75);
       line-height: 1;
     }
@@ -383,7 +385,7 @@
       left: var(--numw, 0mm);
       bottom: calc(var(--pitch) * 0.14);
       color: var(--gcolor);
-      font-family: var(--gfont), "NanumSquareRound", sans-serif;
+      font-family: var(--gfont), "Noto Sans KR", "NanumSquareRound", sans-serif;
       font-size: var(--gsize);
       line-height: 1;
       white-space: pre;
@@ -585,7 +587,48 @@
     .btab .ico { font-size: 18px; line-height: 1.1; }
     .btab.on { color: var(--brand); box-shadow: inset 0 3px 0 var(--brand); }
 
+    /* 컬러 스와치 (격자) */
+    .swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+    .sw {
+      position: relative; aspect-ratio: 1; min-width: 0; padding: 0; cursor: pointer;
+      border: 2px solid #fff; border-radius: 8px; box-shadow: 0 0 0 1px #cfd5da;
+    }
+    .sw:hover { transform: scale(1.08); }
+    .sw.on { box-shadow: 0 0 0 2.5px var(--brand); }
+    .sw.on::after {
+      content: "✓"; position: absolute; inset: 0; display: grid; place-items: center;
+      color: #fff; font-size: 13px; font-weight: 900; text-shadow: 0 0 3px rgba(0, 0, 0, .75);
+    }
+    .sw-custom {
+      background: conic-gradient(#ef4444, #f59e0b, #84cc16, #06b6d4, #6366f1, #d946ef, #ef4444);
+      overflow: hidden;
+    }
+    .sw-custom input { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+    .sw-custom.picked::before { content: ""; position: absolute; inset: 0; background: var(--pick); }
+    .sw-custom.picked::after { content: ""; }
+    .qf .swbtn {
+      display: block; width: 46px; height: 34px; padding: 0; cursor: pointer;
+      border: 2px solid #fff; border-radius: 8px; box-shadow: 0 0 0 1px #cfd5da;
+    }
+    .qf-sw { position: relative; }
+    .swpop {
+      position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; width: 250px; padding: 10px;
+      background: #fff; border: 1px solid var(--edge); border-radius: 12px; box-shadow: 0 12px 28px rgba(31, 41, 55, .2);
+    }
+
+    /* F: 원본(index.html) 디자인 */
+    .ws-f .panel { width: 380px; background: #fff; border-right: 1px solid #d9dde2; }
+    .ws-f .panel-title { padding: 22px 22px 0; font-size: 24px; line-height: 1.25; }
+    .ws-f .panel-body { padding: 18px 22px 30px; }
+    .ws-f .panel-body .section {
+      background: none; border: 0; border-top: 1px solid #e4e7eb; border-radius: 0; padding: 16px 0; margin: 0;
+    }
+    .ws-f .panel-body .section:first-of-type { border-top: 0; padding-top: 0; }
+    .ws-f .panel-body .section-title { color: #2c3238; font-size: 14px; }
+    .ws-f .stage { background: #f3f5f7; }
+
     @media (max-width: 860px) {
+      .ws-f .panel { width: auto; max-height: 46vh; border: 0; border-top: 1px solid var(--edge); order: 3; }
       .topbar { gap: 8px; padding: 0 10px; }
       .brand strong, .pinfo { display: none; }
       .zoombar .zlabel { min-width: 60px; }
@@ -615,7 +658,7 @@
         <p class="section-title">기본 정보</p>
         <div class="field">
           <label for="title">학습지명</label>
-          <input id="title" type="text" value="하루 한 장 바른 글씨">
+          <input id="title" type="text" value="글자 연습">
         </div>
         <div class="field">
           <label for="headerStyle">머리말 형식</label>
@@ -625,10 +668,26 @@
             <option value="none">없음</option>
           </select>
         </div>
+        <div class="check">
+          <input id="showHeader" type="checkbox" checked>
+          <label for="showHeader">상단바 출력 (용지 맨 위 머리말)</label>
+        </div>
+        <div id="hdrOptions">
+          <div class="field">
+            <label for="badgeText">상단 배지 문구</label>
+            <input id="badgeText" type="text" value="바른 글씨 연습">
+          </div>
+          <div class="check-grid">
+            <div class="check"><input id="hdrMascot" type="checkbox" checked><label for="hdrMascot">마스코트</label></div>
+            <div class="check"><input id="hdrBadge" type="checkbox" checked><label for="hdrBadge">배지 · 쪽수</label></div>
+            <div class="check"><input id="hdrTitle" type="checkbox" checked><label for="hdrTitle">학습지명</label></div>
+            <div class="check"><input id="hdrName" type="checkbox" checked><label for="hdrName">학급 · 번호 · 이름</label></div>
+          </div>
+        </div>
         <div class="field-row">
           <div class="field">
             <label for="school">학교명</label>
-            <input id="school" type="text" value="휘웅초">
+            <input id="school" type="text" value="일반초">
           </div>
           <div class="field">
             <label for="source">출처 / 지은이</label>
@@ -848,6 +907,10 @@
             <label for="indent">문단 첫 칸 비우기 (원고지)</label>
           </div>
         </div>
+        <div class="check">
+          <input id="smartQuotes" type="checkbox" checked>
+          <label for="smartQuotes">따옴표를 둥근 따옴표(“ ”)로 자동 변환</label>
+        </div>
         <p class="note">따옴표는 여는 것 우측 상단, 닫는 것 좌측 상단에, 마침표·쉼표는 좌측 하단에 놓입니다. 줄 첫 칸에 오는 닫는 문장부호는 앞 줄 마지막 칸에 붙고, 줄 끝의 여는 따옴표는 다음 줄로 넘어갑니다.</p>
       </section>
 
@@ -925,15 +988,13 @@
           </div>
           <input id="fontSizeLine" type="range" min="8" max="60" value="16">
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="textColor">본문 글자색</label>
-            <input id="textColor" type="color" value="#050505">
-          </div>
-          <div class="field">
-            <label for="traceColor">따라쓰기 글자색</label>
-            <input id="traceColor" type="color" value="#9da3aa">
-          </div>
+        <div class="field">
+          <label for="textColor">본문 글자색</label>
+          <input id="textColor" type="color" value="#050505">
+        </div>
+        <div class="field">
+          <label for="traceColor">따라쓰기 글자색</label>
+          <input id="traceColor" type="color" value="#9da3aa">
         </div>
         <div class="field only-lines">
           <label for="letterSpacing">자간(pt)</label>
@@ -1023,11 +1084,11 @@
     const $ = (id) => document.getElementById(id);
 
     const FIELDS = [
-      "title", "headerStyle", "school", "source", "grade", "classNum", "dateMode", "dateValue", "memoFooter",
+      "title", "headerStyle", "showHeader", "badgeText", "hdrMascot", "hdrBadge", "hdrTitle", "hdrName", "school", "source", "grade", "classNum", "dateMode", "dateValue", "memoFooter",
       "practiceText", "minPages", "repeatChars",
       "paperSize", "orientation", "margin", "layout", "cellMode", "gridCols", "gridRows",
       "cellW", "cellH", "cellUnit", "cellSquare", "linePitch",
-      "writeMode", "traceRows", "blankRows", "traceStyle", "indent", "numMode", "numStart",
+      "writeMode", "traceRows", "blankRows", "traceStyle", "indent", "smartQuotes", "numMode", "numStart",
       "fontSelect", "customFont", "fontAuto", "fontSize", "fontSizeLine", "textColor", "traceColor", "letterSpacing",
       "guideColor", "crossGuide", "circleGuide", "circleSize", "circleOpacity", "lineGuide", "lineColor"
     ];
@@ -1036,7 +1097,7 @@
     const UNIT_MM = { mm: 1, cm: 10, pt: 25.4 / 72, in: 25.4 };
     const UNIT_STEP = { mm: 0.5, cm: 0.05, pt: 1, in: 0.02 };
     const MAX_PAGES = 60;
-    const STORE_KEY = "write1.settings";
+    const STORE_KEY = "write1.settings.v2";
     const PRESET_KEY = "write1.presets";
 
     const fontSettings = {
@@ -1209,6 +1270,41 @@
       }).join("");
     }
 
+    /* ---------- 본문 정리: HTML 엔티티(&ldquo; 등) 해석, 둥근 따옴표 변환 ---------- */
+    const ENTITIES = {
+      quot: '"', amp: "&", lt: "<", gt: ">", nbsp: " ", apos: "'",
+      ldquo: "“", rdquo: "”", lsquo: "‘", rsquo: "’", hellip: "…", middot: "·", laquo: "«", raquo: "»"
+    };
+
+    function decodeEntities(text) {
+      return text.replace(/&(#[xX][0-9a-fA-F]+|#[0-9]+|[a-zA-Z]+);/g, (m, e) => {
+        if (e[0] === "#") {
+          const cp = e[1] === "x" || e[1] === "X" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+          return cp > 0 && cp < 0x110000 ? String.fromCodePoint(cp) : m;
+        }
+        return Object.prototype.hasOwnProperty.call(ENTITIES, e) ? ENTITIES[e] : m;
+      });
+    }
+
+    function curlyQuotes(text) {
+      const chars = Array.from(text);
+      const open = { '"': false, "'": false };
+      return chars.map((ch, i) => {
+        if (ch === '"') { open['"'] = !open['"']; return open['"'] ? "“" : "”"; }
+        if (ch === "'") {
+          if (isAlnum(chars[i - 1]) && isAlnum(chars[i + 1])) return ch;
+          open["'"] = !open["'"];
+          return open["'"] ? "‘" : "’";
+        }
+        return ch;
+      }).join("");
+    }
+
+    function normalizeText(text, smart) {
+      const decoded = decodeEntities(text);
+      return smart ? curlyQuotes(decoded) : decoded;
+    }
+
     /* ---------- 치수 계산 ---------- */
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
     const num = (v, d) => (Number.isFinite(Number(v)) && String(v).trim() !== "" ? Number(v) : d);
@@ -1218,7 +1314,7 @@
       if (c.orientation === "landscape") [w, h] = [h, w];
 
       const m = clamp(num(c.margin, 10), 3, 40);
-      const headerH = c.headerStyle === "worksheet" ? 28 : c.headerStyle === "note" ? 20 : 0;
+      const headerH = !c.showHeader ? 0 : c.headerStyle === "worksheet" ? 28 : c.headerStyle === "note" ? 20 : 0;
       const headerGap = headerH ? 3 : 0;
       const footerH = c.memoFooter ? 18 : 0;
       const footerGap = footerH ? 3 : 0;
@@ -1272,7 +1368,7 @@
     }
 
     function buildPages(c, g, sizePt) {
-      const text = repeatText(c.practiceText.replace(/\r/g, "").replace(/\s+$/, ""), clamp(num(c.repeatChars, 1), 1, 10));
+      const text = repeatText(normalizeText(c.practiceText.replace(/\r/g, "").replace(/\s+$/, ""), c.smartQuotes), clamp(num(c.repeatChars, 1), 1, 10));
       const isGrid = c.layout === "grid";
       g.numW = g.numbered && !isGrid ? Math.round(sizePt * 25.4 / 72 * 2.4 * 10) / 10 : 0;
       let mode = c.writeMode;
@@ -1386,39 +1482,39 @@
     }
 
     function headerHtml(c, pageIndex, total) {
+      if (!c.showHeader || c.headerStyle === "none") return "";
       const title = esc(c.title || "글씨 연습 학습지");
       const date = dateText(c);
       const dateHtml = date ? esc(date) : "20&nbsp;&nbsp;&nbsp;. &nbsp;&nbsp;. &nbsp;&nbsp;.";
+      const badge = `${esc((c.badgeText || "").trim())} ${pageIndex + 1}/${total}`.trim();
 
       if (c.headerStyle === "worksheet") {
+        const cols = [c.hdrMascot ? "24mm" : "", "1fr", c.hdrName ? "52mm" : ""].filter(Boolean).join(" ");
         return `
-          <header class="sheet-header" style="height:${28 - 3}mm">
-            <div class="mascot-frame"><img class="mascot" src="https://hweewoong.github.io/division-website/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%ED%95%99%EC%8A%B5%EC%A7%80%20%EC%A0%9C%EC%9E%91/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/assets/images/book-mascot.png" alt="" onerror="this.style.visibility='hidden'"></div>
+          <header class="sheet-header" style="height:25mm;grid-template-columns:${cols}">
+            ${c.hdrMascot ? `<div class="mascot-frame"><img class="mascot" src="https://hweewoong.github.io/division-website/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%ED%95%99%EC%8A%B5%EC%A7%80%20%EC%A0%9C%EC%9E%91/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/assets/images/book-mascot.png" alt="" onerror="this.style.visibility='hidden'"></div>` : ""}
             <div class="title-block">
-              <div class="sheet-kicker">바른 글씨 연습 ${pageIndex + 1}/${total}</div>
-              <div class="sheet-title">${title}</div>
+              ${c.hdrBadge ? `<div class="sheet-kicker">${badge}</div>` : ""}
+              ${c.hdrTitle ? `<div class="sheet-title">${title}</div>` : ""}
             </div>
-            <div class="student-info">
+            ${c.hdrName ? `<div class="student-info">
               <div>${esc(c.school || "00초")} ${esc(c.grade || "0")}학년 ${esc(c.classNum || "0")}반 <span class="blank"></span> 번</div>
               <div>이름: <span class="name-blank"></span></div>
               ${date ? `<div>날짜: ${esc(date)}</div>` : ""}
-            </div>
+            </div>` : ""}
           </header>`;
       }
-      if (c.headerStyle === "note") {
-        return `
-          <header class="sheet-header h-note" style="height:${20 - 3}mm">
+      return `
+          <header class="sheet-header h-note" style="height:17mm${c.hdrName ? "" : ";grid-template-columns:1fr"}">
             <div class="title-block">
-              <div class="sheet-title">${title}</div>
-              <div class="note-sub">${c.source ? `출처 · ${esc(c.source)}` : ""}${total > 1 ? ` (${pageIndex + 1}/${total})` : ""}</div>
+              ${c.hdrTitle ? `<div class="sheet-title">${title}</div>` : ""}
+              <div class="note-sub">${c.source ? `출처 · ${esc(c.source)}` : ""}${c.hdrBadge && total > 1 ? ` (${pageIndex + 1}/${total})` : ""}</div>
             </div>
-            <div class="note-meta">
+            ${c.hdrName ? `<div class="note-meta">
               <div>날짜: ${dateHtml}</div>
               <div>이름: <span class="name-blank"></span></div>
-            </div>
+            </div>` : ""}
           </header>`;
-      }
-      return "";
     }
 
     function sheetHtml(c, g, rows, pageIndex, total, mode, sizePt) {
@@ -1491,6 +1587,8 @@
         $("linePitch").value = round(g.pitch);
       }
       $("numStart").disabled = c.numMode === "none";
+      $("hdrOptions").classList.toggle("hidden", !c.showHeader);
+      $("headerStyle").disabled = !c.showHeader;
 
       const family = fontFamilyOf(c);
       const preview = $("fontPreview");
@@ -1721,7 +1819,7 @@
       const shell = $("shell");
       const sheets = $("sheets");
       const secs = [...store.querySelectorAll(":scope > .section")];
-      const S = { info: secs[0], text: secs[1], paper: secs[2], write: secs[3], font: secs[4], guide: secs[5], preset: secs[6] };
+      const S = { info: secs[0], text: secs[1], paper: secs[2], write: secs[3], font: secs[4], guide: secs[5], preset: secs[6], actions: secs[7] };
 
       const GROUPS = {
         content: { label: "내용", icon: "✎", secs: ["info", "text"] },
@@ -1745,7 +1843,8 @@
         { key: "B", name: "아코디언", tip: "모든 설정을 접었다 펴는 한 줄 목록" },
         { key: "C", name: "단계별", tip: "내용 → 모양 → 글씨 → 인쇄 순서대로" },
         { key: "D", name: "퀵 툴바", tip: "자주 쓰는 설정을 상단 한 줄에" },
-        { key: "E", name: "하단 시트", tip: "모바일·태블릿 우선, 아래에서 올라오는 패널" }
+        { key: "E", name: "하단 시트", tip: "모바일·태블릿 우선, 아래에서 올라오는 패널" },
+        { key: "F", name: "원본형", tip: "기존 index.html과 같은 왼쪽 목록형 디자인" }
       ];
 
       const h = (tag, cls, html) => {
@@ -1758,6 +1857,60 @@
       const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* 저장 불가 환경 */ } };
       const fire = (el, types) => types.forEach((t) => el.dispatchEvent(new Event(t, { bubbles: true })));
       const setValue = (id, v) => { const el = $(id); el.value = v; fire(el, ["input", "change"]); };
+
+      /* ---- 컬러 스와치 (격자) ---- */
+      const PALETTE = [
+        "#050505", "#374151", "#6b7280", "#9da3aa", "#c4c9cf", "#e5e7eb", "#78350f", "#1e3a8a",
+        "#1d4ed8", "#3b82f6", "#93c5fd", "#0f766e", "#14b8a6", "#16a34a", "#4ade80", "#65a30d",
+        "#7f1d1d", "#dc2626", "#f87171", "#c2410c", "#f97316", "#9333ea", "#db2777"
+      ];
+
+      function swatchGrid(getVal, onPick, customInput) {
+        const grid = h("div", "swatches");
+        PALETTE.forEach((c) => {
+          const b = h("button", "sw");
+          b.type = "button";
+          b.dataset.c = c;
+          b.style.background = c;
+          b.title = c;
+          b.setAttribute("aria-label", `색 ${c}`);
+          grid.append(b);
+        });
+        const custom = h("label", "sw sw-custom");
+        custom.title = "직접 고르기";
+        const input = customInput || h("input");
+        input.type = "color";
+        custom.append(input);
+        grid.append(custom);
+        grid.addEventListener("click", (e) => {
+          const b = e.target.closest(".sw[data-c]");
+          if (b) onPick(b.dataset.c, false);
+        });
+        if (!customInput) input.addEventListener("input", () => onPick(input.value, true));
+        const mark = () => {
+          const v = (getVal() || "").toLowerCase();
+          let hit = false;
+          grid.querySelectorAll(".sw[data-c]").forEach((b) => {
+            const on = b.dataset.c.toLowerCase() === v;
+            b.classList.toggle("on", on);
+            if (on) hit = true;
+          });
+          custom.classList.toggle("on", !hit);
+          custom.classList.toggle("picked", !hit);
+          custom.style.setProperty("--pick", v);
+        };
+        mark();
+        return { el: grid, mark };
+      }
+
+      const swatchMarks = [];
+      ["textColor", "traceColor", "lineColor"].forEach((id) => {
+        const input = $(id);
+        const field = input.parentElement;
+        const g = swatchGrid(() => input.value, (c) => setValue(id, c), input);
+        field.append(g.el);
+        swatchMarks.push(g.mark);
+      });
 
       let variant = "A";
       let zoomMode = "fit";
@@ -1910,6 +2063,21 @@
 
       /* ---- 시안 D: 퀵 툴바 ---- */
       function proxy(kind, label, cfg) {
+        if (kind === "swatch") {
+          const wrap = h("div", "qf qf-sw");
+          const btn = h("button", "swbtn");
+          btn.type = "button";
+          const pop = h("div", "swpop hidden");
+          const g = swatchGrid(cfg.get, (c, fromCustom) => {
+            cfg.set({ value: c });
+            if (!fromCustom) pop.classList.add("hidden");
+          }, null);
+          pop.append(g.el);
+          wrap.append(h("span", "", label), btn, pop);
+          btn.addEventListener("click", () => pop.classList.toggle("hidden"));
+          quick.push({ wrap, input: btn, kind, cfg, grid: g });
+          return wrap;
+        }
         const wrap = h("label", `qf ${kind === "check" ? "chk" : ""}`);
         let input;
         if (kind === "select") {
@@ -1935,7 +2103,13 @@
 
       function syncQuick() {
         const info = $("pageInfo").textContent;
-        quick.forEach(({ input, kind, cfg, wrap }) => {
+        swatchMarks.forEach((mark) => mark());
+        quick.forEach(({ input, kind, cfg, wrap, grid }) => {
+          if (kind === "swatch") {
+            input.style.background = cfg.get();
+            grid.mark();
+            return;
+          }
           if (document.activeElement === input) return;
           if (cfg.hide) wrap.classList.toggle("hidden", cfg.hide());
           if (kind === "select") {
@@ -1964,7 +2138,7 @@
           proxy("select", "형태", { id: "layout", set: (i) => setValue("layout", i.value) }),
           proxy("select", "글꼴", { id: "fontSelect", set: (i) => { setValue("customFont", ""); setValue("fontSelect", i.value); } }),
           proxy("number", "크기(pt)", { min: 8, max: 80, get: () => $(sizeId()).value, set: (i) => setValue(sizeId(), i.value), disabled: () => $("fontAuto").checked }),
-          proxy("color", "글자색", { get: () => $("textColor").value, set: (i) => setValue("textColor", i.value) }),
+          proxy("swatch", "글자색", { get: () => $("textColor").value, set: (i) => setValue("textColor", i.value) }),
           h("div", "qdiv"),
           proxy("number", "가로 칸", { min: 1, max: 60, get: fromInfo(/(\d+)열/), set: (i) => { toCount(); setValue("gridCols", i.value); }, hide: isLines }),
           proxy("number", isLines() ? "줄 수" : "세로 칸", { min: 1, max: 80, get: fromInfo(/(\d+)(?:행|줄)/), set: (i) => { toCount(); setValue("gridRows", i.value); } }),
@@ -2032,12 +2206,23 @@
         shell.append(ws);
       }
 
-      const BUILDERS = { A: buildA, B: buildB, C: buildC, D: buildD, E: buildE };
+      /* ---- 시안 F: 원본(index.html) 디자인 ---- */
+      function buildF() {
+        const ws = h("div", "ws ws-f");
+        const panel = h("aside", "panel");
+        const body = h("div", "panel-body");
+        body.append(...secsOf(["info", "text", "paper", "write", "font", "guide", "preset", "actions"]));
+        panel.append(h("h2", "panel-title", "글씨 연습 학습지 생성기"), body);
+        ws.append(panel, makeStage());
+        shell.append(ws);
+      }
+
+      const BUILDERS = { A: buildA, B: buildB, C: buildC, D: buildD, E: buildE, F: buildF };
 
       function setVariant(key) {
         if (!BUILDERS[key]) key = "A";
         variant = key;
-        save("write1.v2.variant", key);
+        save("write1.v2.variant2", key);
         history.replaceState(null, "", `#${key}`);
         document.body.dataset.v = key;
         quick = [];
@@ -2057,9 +2242,13 @@
       document.addEventListener("change", syncQuick);
       window.addEventListener("resize", applyZoom);
 
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".qf-sw")) document.querySelectorAll(".swpop").forEach((p) => p.classList.add("hidden"));
+      });
+
+      // 기본 화면은 A 작업대. 주소의 #B~#F 또는 마지막으로 고른 시안이 있으면 그것을 연다.
       const fromHash = location.hash.replace("#", "").toUpperCase();
-      const fallback = window.innerWidth < 900 ? "E" : "A";
-      setVariant(BUILDERS[fromHash] ? fromHash : load("write1.v2.variant", fallback));
+      setVariant(BUILDERS[fromHash] ? fromHash : load("write1.v2.variant2", "A"));
     })();
   </script>
 </body>
