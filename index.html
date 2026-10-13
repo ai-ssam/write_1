@@ -61,25 +61,10 @@
     :root {
       --ink: #141414;
       --muted: #646970;
-      --panel: #ffffff;
       --page: #f3f5f7;
       --line: #1d1d1f;
-      --guide: #a4a8ad;
-      --circle-size: 68%;
-      --circle-opacity: 0.9;
-      --practice-font: "GangwonEduAllOTFBold";
-      --practice-weight: 400;
-      --practice-size: 24pt;
-      --glyph-x: 0px;
-      --glyph-y: 0px;
-      --sheet-width: 210mm;
-      --sheet-height: 297mm;
-      --sheet-pad-x: 10mm;
-      --sheet-pad-y: 8mm;
-      --header-height: 28mm;
-      --grid-gap: 3mm;
-      --grid-height: calc(var(--sheet-height) - (var(--sheet-pad-y) * 2) - var(--header-height) - var(--grid-gap));
-      --cell-size: calc(var(--grid-height) / 14);
+      --sheet-w: 210mm;
+      --sheet-h: 297mm;
     }
 
     * {
@@ -90,15 +75,12 @@
       margin: 0;
       color: var(--ink);
       background: var(--page);
-      font-family: "NanumSquareRound", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "NanumSquareRound", system-ui, -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
+    button, input, select, textarea { font: inherit; }
 
     .app {
       min-height: 100vh;
@@ -110,97 +92,45 @@
       height: 100vh;
       overflow: auto;
       padding: 22px;
-      background: #ffffff;
+      background: #fff;
       border-right: 1px solid #d9dde2;
     }
 
-    .controls h1 {
-      margin: 0 0 18px;
-      font-size: 24px;
-      line-height: 1.25;
-    }
+    .controls h1 { margin: 0 0 18px; font-size: 24px; line-height: 1.25; }
 
-    .section {
-      padding: 16px 0;
-      border-top: 1px solid #e4e7eb;
-    }
+    .section { padding: 16px 0; border-top: 1px solid #e4e7eb; }
+    .section:first-of-type { border-top: 0; padding-top: 0; }
+    .section-title { margin: 0 0 12px; font-size: 14px; font-weight: 800; color: #2c3238; }
 
-    .section:first-of-type {
-      border-top: 0;
-      padding-top: 0;
-    }
+    .field { display: grid; gap: 7px; margin-bottom: 13px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-    .section-title {
-      margin: 0 0 12px;
-      font-size: 14px;
-      font-weight: 800;
-      color: #2c3238;
-    }
+    label { font-size: 13px; font-weight: 700; color: #343a40; }
 
-    .field {
-      display: grid;
-      gap: 7px;
-      margin-bottom: 13px;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    label {
-      font-size: 13px;
-      font-weight: 700;
-      color: #343a40;
-    }
-
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       border: 1px solid #cbd2d9;
       border-radius: 6px;
-      padding: 10px 11px;
+      padding: 9px 10px;
       color: var(--ink);
       background: #fff;
       outline: none;
     }
 
-    textarea {
-      min-height: 88px;
-      resize: vertical;
-      line-height: 1.5;
-    }
+    input[type="color"] { padding: 2px; height: 38px; cursor: pointer; }
+    input[type="file"] { padding: 7px; font-size: 12px; }
+    textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #2b6cb0;
       box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
     }
 
-    input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #2f6f73;
-    }
+    input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2f6f73; }
+    input[type="range"] { padding: 0; accent-color: #2f6f73; }
 
-    input[type="range"] {
-      padding: 0;
-      accent-color: #2f6f73;
-    }
-
-    .check {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 12px;
-    }
-
-    .check label {
-      font-weight: 700;
-    }
+    .check { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
 
     .hint-row {
       display: flex;
@@ -211,27 +141,33 @@
       font-size: 12px;
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding-top: 6px;
+    .note { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0 0 10px; }
+    .info-box {
+      padding: 9px 11px;
+      border-radius: 6px;
+      background: #eef6f6;
+      color: #26585c;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
     }
+
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 6px; }
+    .actions3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
     .btn {
       border: 0;
       border-radius: 6px;
-      padding: 11px 12px;
+      padding: 10px 12px;
       font-weight: 800;
       cursor: pointer;
-      color: white;
+      color: #fff;
       background: #2f6f73;
     }
+    .btn.secondary { color: #212529; background: #e8ecef; }
+    .btn.danger { color: #8a1c1c; background: #f6e3e3; }
 
-    .btn.secondary {
-      color: #212529;
-      background: #e8ecef;
-    }
+    .hidden { display: none !important; }
 
     .preview {
       height: 100vh;
@@ -241,60 +177,39 @@
       place-items: start center;
     }
 
-    .sheets {
-      display: grid;
-      gap: 18px;
-      justify-items: center;
-    }
+    .sheets { display: grid; gap: 18px; justify-items: center; }
 
+    /* ---------- 용지 ---------- */
     .sheet {
-      width: var(--sheet-width);
-      height: var(--sheet-height);
-      display: grid;
-      grid-template-rows: var(--header-height) var(--grid-height) 1fr;
-      row-gap: var(--grid-gap);
+      width: var(--sheet-w);
+      height: var(--sheet-h);
+      display: flex;
+      flex-direction: column;
       background: #fff;
-      border: 1.5px solid #24323a;
-      padding: var(--sheet-pad-y) var(--sheet-pad-x);
+      border: 1px solid #b9c2c9;
       box-shadow: 0 12px 30px rgba(31, 41, 55, 0.12);
       overflow: hidden;
       break-after: page;
       page-break-after: always;
     }
-
-    .sheet:last-child {
-      break-after: auto;
-      page-break-after: auto;
-    }
+    .sheet:last-child { break-after: auto; page-break-after: auto; }
 
     .sheet-header {
+      flex: none;
       display: grid;
       grid-template-columns: 24mm 1fr 52mm;
       align-items: center;
       gap: 5mm;
       border-bottom: 2px solid #24323a;
-      height: var(--header-height);
       padding: 0 0 3mm;
+      margin-bottom: 3mm;
     }
+    .sheet-header.h-note { grid-template-columns: 1fr auto; padding-bottom: 2mm; }
 
-    .mascot-frame {
-      width: 22mm;
-      height: 22mm;
-      display: grid;
-      place-items: center;
-    }
+    .mascot-frame { width: 22mm; height: 22mm; display: grid; place-items: center; }
+    .mascot { width: 21mm; height: 21mm; object-fit: contain; }
 
-    .mascot {
-      width: 21mm;
-      height: 21mm;
-      object-fit: contain;
-    }
-
-    .title-block {
-      min-width: 0;
-      display: grid;
-      gap: 1.5mm;
-    }
+    .title-block { min-width: 0; display: grid; gap: 1.5mm; }
 
     .sheet-kicker {
       width: max-content;
@@ -305,17 +220,17 @@
       background: #edf8fa;
       font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0;
     }
 
     .sheet-title {
-      text-align: left;
       font-size: 25px;
       line-height: 1.2;
       font-weight: 800;
       word-break: keep-all;
       overflow-wrap: anywhere;
     }
+    .h-note .sheet-title { font-size: 22px; }
+    .note-sub { font-size: 12px; font-weight: 700; color: #3b444c; }
 
     .student-info {
       display: grid;
@@ -328,38 +243,37 @@
       font-size: 13px;
       font-weight: 700;
     }
+    .note-meta { display: grid; gap: 4px; font-size: 12px; font-weight: 700; text-align: right; }
 
-    .blank {
-      display: inline-block;
-      width: 34px;
-      border-bottom: 2px solid var(--line);
-      transform: translateY(-2px);
+    .blank { display: inline-block; width: 34px; border-bottom: 2px solid var(--line); transform: translateY(-2px); }
+    .name-blank { display: inline-block; width: 112px; border-bottom: 2px solid var(--line); transform: translateY(-2px); }
+    .note-meta .name-blank { width: 80px; }
+
+    .sheet-body { flex: none; overflow: hidden; }
+    .sheet-body.is-grid { display: flex; justify-content: center; align-items: flex-start; }
+
+    .memo {
+      flex: none;
+      margin-top: 3mm;
+      border: 1.5px solid #24323a;
+      border-radius: 4px;
+      padding: 2mm 3mm;
+      font-size: 11px;
+      font-weight: 700;
+      color: #3b444c;
     }
 
-    .name-blank {
-      display: inline-block;
-      width: 112px;
-      border-bottom: 2px solid var(--line);
-      transform: translateY(-2px);
-    }
-
+    /* ---------- 칸 ---------- */
     .grid {
       display: grid;
-      grid-template-columns: repeat(10, var(--cell-size));
-      grid-template-rows: repeat(14, var(--cell-size));
       width: max-content;
       height: max-content;
-      justify-self: center;
       border-top: 2px solid var(--line);
       border-left: 2px solid var(--line);
     }
 
     .cell {
-      width: var(--cell-size);
-      height: var(--cell-size);
       position: relative;
-      display: grid;
-      place-items: center;
       overflow: hidden;
       border-right: 2px solid var(--line);
       border-bottom: 2px solid var(--line);
@@ -372,59 +286,95 @@
       z-index: 0;
       pointer-events: none;
     }
-
-    .cell::before {
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      border-left: 1px dashed var(--guide);
-    }
-
-    .cell::after {
-      left: 0;
-      right: 0;
-      top: 50%;
-      border-top: 1px dashed var(--guide);
-    }
+    .cell::before { top: 0; bottom: 0; left: 50%; border-left: 1px dashed var(--guide); }
+    .cell::after { left: 0; right: 0; top: 50%; border-top: 1px dashed var(--guide); }
 
     .circle-guide {
+      position: absolute;
+      left: 50%;
+      top: 50%;
       width: var(--circle-size);
       height: var(--circle-size);
+      transform: translate(-50%, -50%);
       border: 1.4px dashed var(--guide);
       border-radius: 50%;
       opacity: var(--circle-opacity);
-      position: absolute;
       z-index: 0;
       pointer-events: none;
     }
-
-    .circle-disabled .circle-guide {
-      display: none;
-    }
+    .circle-disabled .circle-guide { display: none; }
+    .no-guide .cell::before, .no-guide .cell::after { display: none; }
 
     .char {
       position: absolute;
       left: 50%;
       top: 50%;
       z-index: 1;
-      color: #050505;
-      font-family: var(--practice-font), "NanumSquareRound", sans-serif;
-      font-weight: var(--practice-weight);
-      font-size: var(--practice-size);
+      color: var(--gcolor);
+      font-family: var(--gfont), "NanumSquareRound", sans-serif;
+      font-size: var(--gsize);
       line-height: 1;
       text-align: center;
       white-space: nowrap;
-      transform: translate(calc(-50% + var(--glyph-x)), calc(-50% + var(--glyph-y)));
+      transform: translate(calc(-50% + var(--gx)), calc(-50% + var(--gy)));
     }
 
-    .char.copy {
-      color: #9da3aa;
+    /* 원고지 문장부호 위치 */
+    .char.q-open  { left: auto; right: 7%; top: 5%; transform: none; }
+    .char.q-close { left: 7%; right: auto; top: 5%; transform: none; }
+    .char.p-end   { left: 9%; right: auto; top: auto; bottom: 5%; transform: none; }
+    .char.tail-top { left: auto; right: 4%; top: 5%; transform: none; }
+    .char.tail-low { left: auto; right: 4%; top: auto; bottom: 5%; transform: none; }
+    .char.tail-mid { left: auto; right: 2%; transform: translateY(-50%); }
+
+    /* 따라쓰기 스타일 */
+    .t-trace .char { color: var(--tcolor); }
+    .ts-light .t-trace { opacity: 0.38; }
+    .ts-outline .t-trace .char, .ts-outline .t-trace .ltext {
+      color: transparent;
+      -webkit-text-stroke: 0.6px var(--tcolor);
+    }
+    .ts-fade .t-trace.tr-1 { opacity: 0.6; }
+    .ts-fade .t-trace.tr-2 { opacity: 0.35; }
+    .ts-fade .t-trace.tr-3 { opacity: 0.18; }
+
+    /* ---------- 가로줄 ---------- */
+    .lines { width: 100%; }
+    .lines.is-split { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; }
+
+    .line {
+      position: relative;
+      height: var(--pitch);
+      border-bottom: 1px solid var(--lcolor);
+    }
+    .lg-mid .line::before,
+    .lg-third .line::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      border-top: 1px dashed var(--guide);
+    }
+    .lg-mid .line::before { top: 50%; }
+    .lg-third .line::before { top: 33.3%; }
+    .lg-third .line::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: 66.6%;
+      border-top: 1px dashed var(--guide);
     }
 
-    .no-guide .cell::before,
-    .no-guide .cell::after {
-      display: none;
+    .ltext {
+      position: absolute;
+      left: 0;
+      bottom: calc(var(--pitch) * 0.14);
+      color: var(--gcolor);
+      font-family: var(--gfont), "NanumSquareRound", sans-serif;
+      font-size: var(--gsize);
+      line-height: 1;
+      white-space: pre;
+      letter-spacing: var(--lspace);
     }
+    .t-trace .ltext { color: var(--tcolor); }
 
     .font-preview {
       font-size: 20px;
@@ -435,69 +385,29 @@
       border: 1px solid #d7dce1;
       border-radius: 6px;
       background: #f8fafb;
-      font-family: var(--practice-font), "NanumSquareRound", sans-serif;
-      font-weight: var(--practice-weight);
+      margin-bottom: 13px;
     }
 
     @media (max-width: 1020px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
-
-      .controls,
-      .preview {
-        height: auto;
-      }
-
-      .controls {
-        border-right: 0;
-        border-bottom: 1px solid #d9dde2;
-      }
-
-      .sheet {
-        width: var(--sheet-width);
-      }
-
-      .char {
-        font-size: var(--practice-size);
-      }
+      .app { grid-template-columns: 1fr; }
+      .controls, .preview { height: auto; }
+      .controls { border-right: 0; border-bottom: 1px solid #d9dde2; }
     }
 
     @media print {
-      body {
-        background: white;
-      }
-
-      .controls {
-        display: none;
-      }
-
-      .app,
-      .preview {
-        display: block;
-        height: auto;
-        padding: 0;
-        overflow: visible;
-      }
-
-      .sheets {
-        display: block;
-      }
-
+      body { background: #fff; }
+      .controls { display: none; }
+      .app, .preview { display: block; height: auto; padding: 0; overflow: visible; }
+      .sheets { display: block; }
       .sheet {
-        width: var(--sheet-width);
-        height: var(--sheet-height);
+        height: calc(var(--sheet-h) - 0.6mm);
         box-shadow: none;
-        border: 2px solid #000;
+        border: 0;
         page-break-inside: avoid;
-      }
-
-      @page {
-        size: A4;
-        margin: 0;
       }
     }
   </style>
+  <style id="pageStyle">@page { size: 210mm 297mm; margin: 0; }</style>
 </head>
 <body>
   <main class="app">
@@ -511,8 +421,22 @@
           <input id="title" type="text" value="하루 한 장 바른 글씨">
         </div>
         <div class="field">
-          <label for="school">학교명</label>
-          <input id="school" type="text" value="휘웅초">
+          <label for="headerStyle">머리말 형식</label>
+          <select id="headerStyle">
+            <option value="worksheet">학습지 (마스코트 · 반/번호/이름)</option>
+            <option value="note">필사 노트 (출처 · 날짜 · 이름)</option>
+            <option value="none">없음</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="school">학교명</label>
+            <input id="school" type="text" value="휘웅초">
+          </div>
+          <div class="field">
+            <label for="source">출처 / 지은이</label>
+            <input id="source" type="text" value="" placeholder="필사 노트용">
+          </div>
         </div>
         <div class="field-row">
           <div class="field">
@@ -524,24 +448,178 @@
             <input id="classNum" type="number" min="1" value="1">
           </div>
         </div>
-        <div class="field">
-          <label for="pageCount">만들 페이지 수</label>
-          <select id="pageCount">
-            <option value="1" selected>1장</option>
-            <option value="2">2장</option>
-            <option value="3">3장</option>
-            <option value="4">4장</option>
-            <option value="5">5장</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="practiceText">낱말 또는 문장</label>
-          <textarea id="practiceText" maxlength="70">가나다라마바사아자차카타파하</textarea>
-          <div class="hint-row">
-            <span>페이지 수에 맞춰 자동 제한됩니다.</span>
-            <strong><span id="count">0</span>/<span id="maxCount">70</span></strong>
+        <div class="field-row">
+          <div class="field">
+            <label for="dateMode">날짜</label>
+            <select id="dateMode">
+              <option value="blank">빈칸</option>
+              <option value="today">오늘 날짜 자동</option>
+              <option value="pick">직접 선택</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="dateValue">날짜 선택</label>
+            <input id="dateValue" type="date">
           </div>
         </div>
+        <div class="check">
+          <input id="memoFooter" type="checkbox">
+          <label for="memoFooter">아래에 "느낀 점 한 줄" 칸 추가</label>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-title">본문</p>
+        <div class="field">
+          <label for="practiceText">낱말 또는 문장 (길이 제한 없음, 자동으로 쪽이 늘어납니다)</label>
+          <textarea id="practiceText">가나다라마바사아자차카타파하
+"차카" 그는 말했다. 안녕, 세상!</textarea>
+          <div class="hint-row">
+            <span>글자 수</span>
+            <strong id="count">0</strong>
+          </div>
+        </div>
+        <div class="field">
+          <label for="textFile">텍스트 파일 불러오기 (.txt)</label>
+          <input id="textFile" type="file" accept=".txt,text/plain">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="minPages">최소 페이지 수</label>
+            <select id="minPages">
+              <option value="1">1장</option>
+              <option value="2">2장</option>
+              <option value="3">3장</option>
+              <option value="4">4장</option>
+              <option value="5">5장</option>
+              <option value="10">10장</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="repeatChars">글자 반복 횟수</label>
+            <input id="repeatChars" type="number" min="1" max="10" value="1">
+          </div>
+        </div>
+        <div id="pageInfo" class="info-box"></div>
+      </section>
+
+      <section class="section">
+        <p class="section-title">용지 / 칸 크기</p>
+        <div class="field-row3">
+          <div class="field">
+            <label for="paperSize">용지</label>
+            <select id="paperSize">
+              <option value="A4">A4</option>
+              <option value="B5">B5</option>
+              <option value="A5">A5</option>
+              <option value="Letter">Letter</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="orientation">방향</label>
+            <select id="orientation">
+              <option value="portrait">세로</option>
+              <option value="landscape">가로</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="margin">여백(mm)</label>
+            <input id="margin" type="number" min="3" max="40" step="1" value="8">
+          </div>
+        </div>
+        <p class="note">프린터는 가장자리 인쇄가 안 되는 구간이 있어 여백 8mm 이상을 권장합니다.</p>
+
+        <div class="field">
+          <label for="layout">레이아웃</label>
+          <select id="layout">
+            <option value="grid">칸 (어린이 · 원고지)</option>
+            <option value="lines">가로줄만 (성인용)</option>
+          </select>
+        </div>
+
+        <div class="only-grid">
+          <div class="field">
+            <label for="cellPreset">칸 크기 프리셋</label>
+            <select id="cellPreset">
+              <option value="">직접 입력</option>
+              <option value="basic">기본 학습지 (10열 × 14행)</option>
+              <option value="big">큰 칸 25mm</option>
+              <option value="small">작은 칸 12mm</option>
+              <option value="manuscript">원고지 (20열 · 줄 띄움)</option>
+            </select>
+          </div>
+          <div class="field-row3">
+            <div class="field">
+              <label for="cellW">칸 가로</label>
+              <input id="cellW" type="number" min="1" step="0.5" value="17.8">
+            </div>
+            <div class="field">
+              <label for="cellH">칸 세로</label>
+              <input id="cellH" type="number" min="1" step="0.5" value="17.8">
+            </div>
+            <div class="field">
+              <label for="cellUnit">단위</label>
+              <select id="cellUnit">
+                <option value="mm">mm</option>
+                <option value="cm">cm</option>
+                <option value="pt">pt</option>
+                <option value="in">inch</option>
+              </select>
+            </div>
+          </div>
+          <div class="check">
+            <input id="cellSquare" type="checkbox" checked>
+            <label for="cellSquare">가로·세로 같게 (정사각형)</label>
+          </div>
+        </div>
+
+        <div class="only-lines">
+          <div class="field">
+            <label for="linePitch">줄 간격(mm)</label>
+            <input id="linePitch" type="number" min="5" max="30" step="0.5" value="10">
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-title">쓰기 방식</p>
+        <div class="field">
+          <label for="writeMode">출력 방식</label>
+          <select id="writeMode">
+            <option value="pattern">본문 줄 + 따라쓰기 / 빈 줄</option>
+            <option value="textOnly">본문만 연속 출력 (연습 줄 없음)</option>
+            <option value="split">좌우 분할 (왼쪽 원문 · 오른쪽 필사) — 가로줄만</option>
+          </select>
+        </div>
+        <div id="patternBox">
+          <div class="field-row">
+            <div class="field">
+              <label for="traceRows">따라쓰기 줄 수</label>
+              <input id="traceRows" type="number" min="0" max="3" value="1">
+            </div>
+            <div class="field">
+              <label for="blankRows">빈 연습 줄 수</label>
+              <input id="blankRows" type="number" min="0" max="3" value="0">
+            </div>
+          </div>
+          <div class="field">
+            <label for="traceStyle">따라쓰기 농도</label>
+            <select id="traceStyle">
+              <option value="solid">보통</option>
+              <option value="light">연하게</option>
+              <option value="outline">윤곽선</option>
+              <option value="fade">줄마다 점점 흐리게</option>
+              <option value="first">첫 글자만 표시</option>
+            </select>
+          </div>
+        </div>
+        <div class="only-grid">
+          <div class="check">
+            <input id="indent" type="checkbox">
+            <label for="indent">문단 첫 칸 비우기 (원고지)</label>
+          </div>
+        </div>
+        <p class="note">따옴표는 여는 것 우측 상단, 닫는 것 좌측 상단에, 마침표·쉼표는 좌측 하단에 놓입니다. 줄 첫 칸에 오는 닫는 문장부호는 앞 줄 마지막 칸에 붙고, 줄 끝의 여는 따옴표는 다음 줄로 넘어갑니다.</p>
       </section>
 
       <section class="section">
@@ -549,34 +627,51 @@
         <div class="field">
           <label for="fontSelect">폰트 선택</label>
           <select id="fontSelect">
-            <option value="GangwonEduAllOTFBold|400">강원교육모두 Bold</option>
-            <option value="GangwonEduAllOTFLight|400">강원교육모두 Light</option>
-            <option value="NanumSquareRound|400">나눔스퀘어라운드 Regular</option>
-            <option value="BookkMyeongjo2|400">부크크명조2</option>
-            <option value="ChosunGungseo|400">조선궁서체</option>
+            <option value="GangwonEduAllOTFBold">강원교육모두 Bold</option>
+            <option value="GangwonEduAllOTFLight">강원교육모두 Light</option>
+            <option value="NanumSquareRound">나눔스퀘어라운드 Regular</option>
+            <option value="BookkMyeongjo2">부크크명조2</option>
+            <option value="ChosunGungseo">조선궁서체</option>
           </select>
         </div>
         <div id="fontPreview" class="font-preview">가나다 ABC 123</div>
-        <div class="field">
+
+        <div class="check">
+          <input id="fontAuto" type="checkbox">
+          <label for="fontAuto">글씨 크기를 칸/줄 크기에 자동으로 맞춤</label>
+        </div>
+        <div class="field only-grid">
           <div class="hint-row">
-            <label for="fontSize">글씨 크기</label>
+            <label for="fontSize">글씨 크기 (칸)</label>
             <strong><span id="fontSizeValue">24</span>pt</strong>
           </div>
-          <input id="fontSize" type="range" min="12" max="32" value="24">
-          <input id="fontSizeNumber" type="number" min="12" max="32" value="24" aria-label="글씨 크기 pt">
+          <input id="fontSize" type="range" min="8" max="80" value="24">
+        </div>
+        <div class="field only-lines">
+          <div class="hint-row">
+            <label for="fontSizeLine">글씨 크기 (가로줄)</label>
+            <strong><span id="fontSizeLineValue">16</span>pt</strong>
+          </div>
+          <input id="fontSizeLine" type="range" min="8" max="60" value="16">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="textColor">본문 글자색</label>
+            <input id="textColor" type="color" value="#050505">
+          </div>
+          <div class="field">
+            <label for="traceColor">따라쓰기 글자색</label>
+            <input id="traceColor" type="color" value="#9da3aa">
+          </div>
+        </div>
+        <div class="field only-lines">
+          <label for="letterSpacing">자간(pt)</label>
+          <input id="letterSpacing" type="number" min="0" max="10" step="0.5" value="0">
         </div>
       </section>
 
       <section class="section">
         <p class="section-title">가이드라인</p>
-        <div class="check">
-          <input id="crossGuide" type="checkbox" checked>
-          <label for="crossGuide">중앙 십자 점선</label>
-        </div>
-        <div class="check">
-          <input id="circleGuide" type="checkbox" checked>
-          <label for="circleGuide">중앙 원형 점선</label>
-        </div>
         <div class="field">
           <label for="guideColor">점선 색상</label>
           <select id="guideColor">
@@ -586,31 +681,67 @@
             <option value="#d8a2a2">연한 빨강</option>
           </select>
         </div>
-        <div class="field">
-          <div class="hint-row">
-            <label for="circleSize">원 크기</label>
-            <strong><span id="circleSizeValue">68</span>%</strong>
+        <div class="only-grid">
+          <div class="check">
+            <input id="crossGuide" type="checkbox" checked>
+            <label for="crossGuide">중앙 십자 점선</label>
           </div>
-          <input id="circleSize" type="range" min="48" max="84" value="68">
+          <div class="check">
+            <input id="circleGuide" type="checkbox" checked>
+            <label for="circleGuide">중앙 원형 점선</label>
+          </div>
+          <div class="field">
+            <div class="hint-row">
+              <label for="circleSize">원 크기</label>
+              <strong><span id="circleSizeValue">68</span>%</strong>
+            </div>
+            <input id="circleSize" type="range" min="48" max="84" value="68">
+          </div>
+          <div class="field">
+            <div class="hint-row">
+              <label for="circleOpacity">원 선명도</label>
+              <strong><span id="circleOpacityValue">90</span>%</strong>
+            </div>
+            <input id="circleOpacity" type="range" min="25" max="100" value="90">
+          </div>
         </div>
-        <div class="field">
-          <div class="hint-row">
-            <label for="circleOpacity">원 선명도</label>
-            <strong><span id="circleOpacityValue">90</span>%</strong>
+        <div class="only-lines">
+          <div class="field">
+            <label for="lineGuide">줄 안 보조선</label>
+            <select id="lineGuide">
+              <option value="none">없음</option>
+              <option value="mid">중간 점선</option>
+              <option value="third">3등분 점선</option>
+            </select>
           </div>
-          <input id="circleOpacity" type="range" min="25" max="100" value="90">
+          <div class="field">
+            <label for="lineColor">줄 색상</label>
+            <input id="lineColor" type="color" value="#555b61">
+          </div>
         </div>
       </section>
 
       <section class="section">
-        <p class="section-title">쓰기 방식</p>
-        <div class="check">
-          <input id="copyMode" type="checkbox" checked>
-          <label for="copyMode">다음 줄에 회색 따라쓰기 글자 표시</label>
+        <p class="section-title">설정 저장</p>
+        <div class="field">
+          <label for="presetName">프리셋 이름</label>
+          <input id="presetName" type="text" placeholder="예: 3학년 큰 칸">
         </div>
+        <div class="field">
+          <select id="presetList"></select>
+        </div>
+        <div class="actions3">
+          <button id="presetSave" class="btn secondary" type="button">저장</button>
+          <button id="presetLoad" class="btn secondary" type="button">불러오기</button>
+          <button id="presetDelete" class="btn danger" type="button">삭제</button>
+        </div>
+        <p class="note" style="margin-top:10px">이 브라우저에 저장되며, 마지막 설정은 자동으로 기억됩니다.</p>
+      </section>
+
+      <section class="section">
         <div class="actions">
           <button id="resetBtn" class="btn secondary" type="button">초기화</button>
-          <button id="printBtn" class="btn" type="button">PDF 저장</button>
+          <button id="printBtn" class="btn" type="button">인쇄 / PDF 저장</button>
         </div>
       </section>
     </aside>
@@ -621,34 +752,23 @@
   </main>
 
   <script>
-    const rows = 14;
-    const cols = 10;
-    const charsPerPage = 70;
-    const chunksPerPage = rows / 2;
-    const state = {
-      title: document.getElementById("title"),
-      school: document.getElementById("school"),
-      grade: document.getElementById("grade"),
-      classNum: document.getElementById("classNum"),
-      pageCount: document.getElementById("pageCount"),
-      practiceText: document.getElementById("practiceText"),
-      fontSelect: document.getElementById("fontSelect"),
-      fontSize: document.getElementById("fontSize"),
-      crossGuide: document.getElementById("crossGuide"),
-      circleGuide: document.getElementById("circleGuide"),
-      guideColor: document.getElementById("guideColor"),
-      circleSize: document.getElementById("circleSize"),
-      circleOpacity: document.getElementById("circleOpacity"),
-      copyMode: document.getElementById("copyMode")
-    };
+    const $ = (id) => document.getElementById(id);
 
-    const sheets = document.getElementById("sheets");
-    const count = document.getElementById("count");
-    const maxCount = document.getElementById("maxCount");
-    const fontPreview = document.getElementById("fontPreview");
-    const fontSizeValue = document.getElementById("fontSizeValue");
-    const circleSizeValue = document.getElementById("circleSizeValue");
-    const circleOpacityValue = document.getElementById("circleOpacityValue");
+    const FIELDS = [
+      "title", "headerStyle", "school", "source", "grade", "classNum", "dateMode", "dateValue", "memoFooter",
+      "practiceText", "minPages", "repeatChars",
+      "paperSize", "orientation", "margin", "layout", "cellW", "cellH", "cellUnit", "cellSquare", "linePitch",
+      "writeMode", "traceRows", "blankRows", "traceStyle", "indent",
+      "fontSelect", "fontAuto", "fontSize", "fontSizeLine", "textColor", "traceColor", "letterSpacing",
+      "guideColor", "crossGuide", "circleGuide", "circleSize", "circleOpacity", "lineGuide", "lineColor"
+    ];
+
+    const PAPER = { A4: [210, 297], B5: [176, 250], A5: [148, 210], Letter: [215.9, 279.4] };
+    const UNIT_MM = { mm: 1, cm: 10, pt: 25.4 / 72, in: 25.4 };
+    const UNIT_STEP = { mm: 0.5, cm: 0.05, pt: 1, in: 0.02 };
+    const MAX_PAGES = 60;
+    const STORE_KEY = "write1.settings";
+    const PRESET_KEY = "write1.presets";
 
     const fontSettings = {
       GangwonModuBold: { x: 0, y: 1 },
@@ -660,184 +780,575 @@
       ChosunGungseo: { x: 0, y: 2 }
     };
 
-    function chunkText(text) {
-      const chunks = [];
-      text.split("\n").forEach((line) => {
-        if (!line.length) {
-          chunks.push("");
-          return;
-        }
+    const sheetsEl = $("sheets");
 
-        for (let index = 0; index < line.length; index += cols) {
-          chunks.push(line.slice(index, index + cols));
+    /* ---------- 설정 읽기/쓰기/저장 ---------- */
+    function readSettings() {
+      const s = {};
+      FIELDS.forEach((id) => {
+        const el = $(id);
+        s[id] = el.type === "checkbox" ? el.checked : el.value;
+      });
+      return s;
+    }
+
+    function writeSettings(s) {
+      FIELDS.forEach((id) => {
+        if (!(id in s)) return;
+        const el = $(id);
+        if (el.type === "checkbox") {
+          el.checked = !!s[id];
+        } else if (el.tagName === "SELECT") {
+          if ([...el.options].some((o) => o.value === s[id])) el.value = s[id];
+        } else {
+          el.value = s[id];
         }
       });
-      return chunks;
     }
 
-    function getPageCount() {
-      return Math.max(1, Number(state.pageCount.value) || 1);
+    const DEFAULTS = readSettings();
+
+    function loadJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
     }
 
-    function getMaxChars() {
-      return getPageCount() * charsPerPage;
+    function saveJson(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* 저장 불가 환경 */ }
     }
 
-    function makeCell(char, isCopy) {
-      const cell = document.createElement("div");
-      cell.className = "cell";
+    /* ---------- 문장부호 분류 (원고지 규칙) ---------- */
+    const OPEN_Q = new Set(["“", "‘", "「", "『"]);
+    const CLOSE_Q = new Set(["”", "’", "」", "』"]);
+    const END_P = new Set([".", ",", "。", "、", "．", "，"]);
+    const MID_P = new Set(["?", "!", "？", "！", "…"]);
+    const CLOSE_B = new Set([")", "]", "}", "）", "］", "｝", "》", "〉"]);
+    const isAlnum = (c) => !!c && /[0-9A-Za-z가-힣]/.test(c);
 
-      const circle = document.createElement("span");
-      circle.className = "circle-guide";
-      cell.appendChild(circle);
+    function classify(chars, i, quoteState) {
+      const ch = chars[i];
+      if (ch === " " || ch === "\t" || ch === "　") return { kind: "space" };
 
-      if (char) {
-        const [family, weight] = state.fontSelect.value.split("|");
-        const glyph = document.createElement("span");
-        glyph.className = isCopy ? "char copy" : "char";
-        glyph.textContent = char;
-        glyph.style.fontFamily = `"${family}", "NanumSquareRound", sans-serif`;
-        glyph.style.fontWeight = weight;
-        glyph.style.fontSize = `${state.fontSize.value}pt`;
-        cell.appendChild(glyph);
+      if (ch === '"' || ch === "'") {
+        if (ch === "'" && isAlnum(chars[i - 1]) && isAlnum(chars[i + 1])) {
+          return { ch, kind: "char", pos: "" };
+        }
+        quoteState[ch] = !quoteState[ch];
+        return quoteState[ch]
+          ? { ch, kind: "open", pos: "q-open" }
+          : { ch, kind: "close", pos: "q-close", noStart: true };
+      }
+      if (OPEN_Q.has(ch)) return { ch, kind: "open", pos: "q-open" };
+      if (CLOSE_Q.has(ch)) return { ch, kind: "close", pos: "q-close", noStart: true };
+      if (END_P.has(ch)) return { ch, kind: "end", pos: "p-end", noStart: true };
+      if (MID_P.has(ch) || CLOSE_B.has(ch)) return { ch, kind: "mid", pos: "", noStart: true };
+      return { ch, kind: "char", pos: "" };
+    }
+
+    const tailClass = (item) => (item.kind === "close" ? "tail-top" : item.kind === "end" ? "tail-low" : "tail-mid");
+
+    /* 본문을 칸 단위 줄로 흘려 보낸다 */
+    function flowGrid(text, cols, indent) {
+      const rows = [];
+      const quoteState = {};
+      const BLANK = { kind: "blank" };
+
+      text.split("\n").forEach((para) => {
+        let cur = [];
+        const flush = () => { rows.push(cur); cur = []; };
+        if (indent && cols > 1) cur.push(BLANK);
+
+        const chars = Array.from(para);
+        chars.forEach((_, i) => {
+          const item = classify(chars, i, quoteState);
+
+          if (item.kind === "space") {
+            if (cur.length === 0 || cur.length >= cols) return;
+            cur.push(item);
+            return;
+          }
+
+          if (cur.length >= cols) {
+            const last = cur[cur.length - 1];
+            if (item.noStart && last && !last.tail && last.kind !== "blank") {
+              last.tail = item;
+              return;
+            }
+            flush();
+          }
+
+          if (item.kind === "open" && cols > 1 && cur.length === cols - 1) {
+            cur.push(BLANK);
+            flush();
+          }
+          cur.push(item);
+        });
+        rows.push(cur);
+      });
+      return rows;
+    }
+
+    /* 가로줄: 폭에 맞춰 줄바꿈 */
+    const measureCtx = document.createElement("canvas").getContext("2d");
+
+    function wrapLines(text, maxPx, fontCss, letterPx) {
+      measureCtx.font = fontCss;
+      const width = (s) => measureCtx.measureText(s).width + Array.from(s).length * letterPx;
+      const out = [];
+
+      text.split("\n").forEach((para) => {
+        if (!para.length) { out.push(""); return; }
+        let line = "";
+        para.split(/(\s+)/).forEach((tok) => {
+          if (!tok) return;
+          if (width(line + tok) <= maxPx) { line += tok; return; }
+          if (/^\s+$/.test(tok)) { out.push(line.trimEnd()); line = ""; return; }
+          if (line) { out.push(line.trimEnd()); line = ""; }
+          Array.from(tok).forEach((c) => {
+            if (width(line + c) > maxPx && line) { out.push(line); line = ""; }
+            line += c;
+          });
+        });
+        out.push(line.trimEnd());
+      });
+      return out;
+    }
+
+    function repeatText(text, n) {
+      if (n <= 1) return text;
+      return Array.from(text).map((ch) => {
+        if (/\s/.test(ch) || END_P.has(ch) || MID_P.has(ch) || OPEN_Q.has(ch) || CLOSE_Q.has(ch)) return ch;
+        return ch.repeat(n);
+      }).join("");
+    }
+
+    /* ---------- 치수 계산 ---------- */
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const num = (v, d) => (Number.isFinite(Number(v)) && String(v).trim() !== "" ? Number(v) : d);
+
+    function geometry(c) {
+      let [w, h] = PAPER[c.paperSize] || PAPER.A4;
+      if (c.orientation === "landscape") [w, h] = [h, w];
+
+      const m = clamp(num(c.margin, 10), 3, 40);
+      const headerH = c.headerStyle === "worksheet" ? 28 : c.headerStyle === "note" ? 20 : 0;
+      const headerGap = headerH ? 3 : 0;
+      const footerH = c.memoFooter ? 18 : 0;
+      const footerGap = footerH ? 3 : 0;
+      const areaW = w - m * 2;
+      const areaH = h - m * 2 - headerH - headerGap - footerH - footerGap;
+
+      const f = UNIT_MM[c.cellUnit] || 1;
+      const cw = Math.max(2, num(c.cellW, 17.8) * f);
+      const ch = Math.max(2, num(c.cellH, 17.8) * f);
+      const pitch = clamp(num(c.linePitch, 10), 5, 30);
+
+      const g = { w, h, m, headerH, footerH, areaW, areaH, cw, ch, pitch };
+      g.cols = Math.max(1, Math.floor((areaW - 0.5) / cw));
+      g.gridRows = Math.max(1, Math.floor((areaH - 0.5) / ch));
+      g.lineRows = Math.max(1, Math.floor(areaH / pitch));
+      return g;
+    }
+
+    /* ---------- 페이지 구성 ---------- */
+    const fontReady = new Set();
+    function ensureFont(family, px) {
+      const key = family + px;
+      if (fontReady.has(key)) return;
+      fontReady.add(key);
+      document.fonts.load(`${px}px "${family}"`).then(() => scheduleRender()).catch(() => {});
+    }
+
+    function glyphSize(c, g) {
+      if (c.layout === "grid") {
+        if (c.fontAuto) return Math.round(Math.min(g.cw, g.ch) * 0.6 * 72 / 25.4 * 10) / 10;
+        return num(c.fontSize, 24);
+      }
+      if (c.fontAuto) return Math.round(g.pitch * 0.55 * 72 / 25.4 * 10) / 10;
+      return num(c.fontSizeLine, 16);
+    }
+
+    function buildPages(c, g, sizePt) {
+      const text = repeatText(c.practiceText.replace(/\r/g, "").replace(/\s+$/, ""), clamp(num(c.repeatChars, 1), 1, 10));
+      const isGrid = c.layout === "grid";
+      let mode = c.writeMode;
+      if (isGrid && mode === "split") mode = "pattern";
+
+      let lineData;
+      if (isGrid) {
+        lineData = text ? flowGrid(text, g.cols, c.indent) : [];
+      } else {
+        const px = sizePt * 96 / 72;
+        const letterPx = num(c.letterSpacing, 0) * 96 / 72;
+        const family = c.fontSelect;
+        ensureFont(family, Math.round(px));
+        const widthMm = mode === "split" ? (g.areaW - 6) / 2 : g.areaW;
+        lineData = text ? wrapLines(text, widthMm * 96 / 25.4, `${px}px "${family}"`, letterPx) : [];
       }
 
-      return cell;
+      const traceRows = mode === "pattern" ? clamp(num(c.traceRows, 1), 0, 3) : 0;
+      const blankRows = mode === "pattern" ? clamp(num(c.blankRows, 0), 0, 3) : 0;
+      const groupSize = 1 + traceRows + blankRows;
+      const rowsPerPage = isGrid ? g.gridRows : g.lineRows;
+      const perPage = Math.max(1, Math.floor(rowsPerPage / groupSize));
+      const minPages = num(c.minPages, 1);
+      const total = clamp(Math.max(minPages, Math.ceil(lineData.length / perPage)), 1, MAX_PAGES);
+
+      const pages = [];
+      for (let p = 0; p < total; p += 1) {
+        const rows = [];
+        lineData.slice(p * perPage, (p + 1) * perPage).forEach((line) => {
+          rows.push({ kind: mode === "pattern" ? "model" : "plain", line });
+          for (let t = 1; t <= traceRows; t += 1) rows.push({ kind: "trace", ti: t, line });
+          for (let b = 0; b < blankRows; b += 1) rows.push({ kind: "empty" });
+        });
+        pages.push(rows);
+      }
+      return { pages, mode, rowsPerPage, truncated: Math.ceil(lineData.length / perPage) > MAX_PAGES };
     }
 
-    function renderGrid(grid, pageChunks) {
-      const copyMode = state.copyMode.checked;
-      grid.innerHTML = "";
+    /* ---------- HTML 생성 ---------- */
+    const esc = (s) => String(s).replace(/[&<>"]/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
 
-      for (let row = 0; row < rows; row += 1) {
-        const sourceIndex = Math.floor(row / 2);
-        const isPracticeRow = row % 2 === 0;
-        const rowText = isPracticeRow || copyMode ? pageChunks[sourceIndex] || "" : "";
+    function glyph(item, extra) {
+      return `<span class="char ${extra || item.pos}">${esc(item.ch)}</span>`;
+    }
 
-        for (let col = 0; col < cols; col += 1) {
-          grid.appendChild(makeCell(rowText[col], !isPracticeRow && copyMode));
+    function gridHtml(rows, g, c) {
+      const cells = [];
+      for (let r = 0; r < g.gridRows; r += 1) {
+        const desc = rows[r];
+        let cls = "t-empty";
+        let items = [];
+        if (desc && desc.kind !== "empty") {
+          items = desc.line;
+          cls = desc.kind === "model" ? "t-model" : desc.kind === "trace" ? `t-trace tr-${desc.ti}` : "t-plain";
+          if (desc.kind === "trace" && c.traceStyle === "first") items = items.slice(0, 1);
+        }
+        for (let col = 0; col < g.cols; col += 1) {
+          const item = items[col];
+          let inner = '<span class="circle-guide"></span>';
+          if (item && item.ch) {
+            inner += glyph(item);
+            if (item.tail) inner += glyph(item.tail, tailClass(item.tail));
+          }
+          cells.push(`<div class="cell ${cls}">${inner}</div>`);
         }
       }
+      return `<div class="grid" style="grid-template-columns:repeat(${g.cols},${g.cw}mm);grid-template-rows:repeat(${g.gridRows},${g.ch}mm)">${cells.join("")}</div>`;
     }
 
-    function makeSheet(pageIndex, pageCount, pageChunks) {
-      const sheet = document.createElement("article");
-      sheet.className = "sheet";
-      sheet.classList.toggle("no-guide", !state.crossGuide.checked);
-      sheet.classList.toggle("circle-disabled", !state.circleGuide.checked);
+    function linesHtml(rows, g, c, mode) {
+      const lineHtml = (text, cls) => `<div class="line ${cls}">${text ? `<span class="ltext">${esc(text)}</span>` : ""}</div>`;
+      const column = (fn) => {
+        let html = "";
+        for (let r = 0; r < g.lineRows; r += 1) html += fn(r);
+        return html;
+      };
+      const textOf = (desc) => {
+        if (!desc || desc.kind === "empty") return "";
+        if (desc.kind === "trace" && c.traceStyle === "first") return desc.line.slice(0, 1);
+        return desc.line;
+      };
+      const clsOf = (desc) => (!desc || desc.kind === "empty" ? "t-empty" : desc.kind === "model" ? "t-model" : desc.kind === "trace" ? `t-trace tr-${desc.ti}` : "t-plain");
 
-      sheet.innerHTML = `
-        <header class="sheet-header">
-          <div class="mascot-frame">
-            <img class="mascot" src="https://hweewoong.github.io/division-website/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%ED%95%99%EC%8A%B5%EC%A7%80%20%EC%A0%9C%EC%9E%91/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/assets/images/book-mascot.png" alt="">
-          </div>
-          <div class="title-block">
-            <div class="sheet-kicker"></div>
-            <div class="sheet-title"></div>
-          </div>
-          <div class="student-info">
-            <div><span class="class-line"></span> <span class="blank"></span> 번</div>
-            <div>이름: <span class="name-blank"></span></div>
-          </div>
-        </header>
-        <div class="grid"></div>
-      `;
-
-      sheet.querySelector(".sheet-kicker").textContent = `바른 글씨 연습 ${pageIndex + 1}/${pageCount}`;
-      sheet.querySelector(".sheet-title").textContent = state.title.value || "글씨 연습 학습지";
-      sheet.querySelector(".class-line").textContent = `${state.school.value || "00초"} ${state.grade.value || "0"}학년 ${state.classNum.value || "0"}반`;
-      renderGrid(sheet.querySelector(".grid"), pageChunks);
-
-      return sheet;
-    }
-
-    function renderSheets() {
-      const pageCount = getPageCount();
-      const chunks = chunkText(state.practiceText.value.trimEnd());
-      sheets.innerHTML = "";
-
-      for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
-        const start = pageIndex * chunksPerPage;
-        const pageChunks = chunks.slice(start, start + chunksPerPage);
-        sheets.appendChild(makeSheet(pageIndex, pageCount, pageChunks));
+      if (mode === "split") {
+        const left = column((r) => lineHtml(textOf(rows[r]), "t-plain"));
+        const right = column(() => lineHtml("", "t-empty"));
+        return `<div class="lines is-split"><div>${left}</div><div>${right}</div></div>`;
       }
+      return `<div class="lines">${column((r) => lineHtml(textOf(rows[r]), clsOf(rows[r])))}</div>`;
     }
 
-    function applyFont() {
-      const [family, weight] = state.fontSelect.value.split("|");
-      const setting = fontSettings[family] || { x: 0, y: 0 };
-      document.documentElement.style.setProperty("--practice-font", `"${family}"`);
-      document.documentElement.style.setProperty("--practice-weight", weight);
-      document.documentElement.style.setProperty("--practice-size", `${state.fontSize.value}pt`);
-      document.documentElement.style.setProperty("--glyph-x", `${setting.x}px`);
-      document.documentElement.style.setProperty("--glyph-y", `${setting.y}px`);
-      fontSizeValue.textContent = state.fontSize.value;
-      fontPreview.style.fontFamily = `"${family}", "NanumSquareRound", sans-serif`;
-      fontPreview.style.fontWeight = weight;
+    function dateText(c) {
+      const fmt = (d) => `${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}.`;
+      if (c.dateMode === "today") return fmt(new Date());
+      if (c.dateMode === "pick" && c.dateValue) {
+        const [y, m, d] = c.dateValue.split("-").map(Number);
+        return `${y}. ${m}. ${d}.`;
+      }
+      return "";
+    }
+
+    function headerHtml(c, pageIndex, total) {
+      const title = esc(c.title || "글씨 연습 학습지");
+      const date = dateText(c);
+      const dateHtml = date ? esc(date) : "20&nbsp;&nbsp;&nbsp;. &nbsp;&nbsp;. &nbsp;&nbsp;.";
+
+      if (c.headerStyle === "worksheet") {
+        return `
+          <header class="sheet-header" style="height:${28 - 3}mm">
+            <div class="mascot-frame"><img class="mascot" src="https://hweewoong.github.io/division-website/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%ED%95%99%EC%8A%B5%EC%A7%80%20%EC%A0%9C%EC%9E%91/%EB%B0%94%EB%A5%B8%EA%B8%80%EC%94%A8%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/assets/images/book-mascot.png" alt="" onerror="this.style.visibility='hidden'"></div>
+            <div class="title-block">
+              <div class="sheet-kicker">바른 글씨 연습 ${pageIndex + 1}/${total}</div>
+              <div class="sheet-title">${title}</div>
+            </div>
+            <div class="student-info">
+              <div>${esc(c.school || "00초")} ${esc(c.grade || "0")}학년 ${esc(c.classNum || "0")}반 <span class="blank"></span> 번</div>
+              <div>이름: <span class="name-blank"></span></div>
+              ${date ? `<div>날짜: ${esc(date)}</div>` : ""}
+            </div>
+          </header>`;
+      }
+      if (c.headerStyle === "note") {
+        return `
+          <header class="sheet-header h-note" style="height:${20 - 3}mm">
+            <div class="title-block">
+              <div class="sheet-title">${title}</div>
+              <div class="note-sub">${c.source ? `출처 · ${esc(c.source)}` : ""}${total > 1 ? ` (${pageIndex + 1}/${total})` : ""}</div>
+            </div>
+            <div class="note-meta">
+              <div>날짜: ${dateHtml}</div>
+              <div>이름: <span class="name-blank"></span></div>
+            </div>
+          </header>`;
+      }
+      return "";
+    }
+
+    function sheetHtml(c, g, rows, pageIndex, total, mode, sizePt) {
+      const family = c.fontSelect;
+      const fs = fontSettings[family] || { x: 0, y: 0 };
+      const classes = [
+        "sheet",
+        c.crossGuide ? "" : "no-guide",
+        c.circleGuide ? "" : "circle-disabled",
+        `ts-${c.traceStyle}`,
+        c.layout === "lines" ? `lg-${c.lineGuide}` : ""
+      ].join(" ");
+
+      const vars = [
+        `padding:${g.m}mm`,
+        `--guide:${c.guideColor}`,
+        `--circle-size:${c.circleSize}%`,
+        `--circle-opacity:${num(c.circleOpacity, 90) / 100}`,
+        `--gfont:'${family}'`,
+        `--gsize:${sizePt}pt`,
+        `--gx:${fs.x}px`,
+        `--gy:${fs.y}px`,
+        `--gcolor:${c.textColor}`,
+        `--tcolor:${c.traceColor}`,
+        `--lcolor:${c.lineColor}`,
+        `--pitch:${g.pitch}mm`,
+        `--lspace:${num(c.letterSpacing, 0)}pt`
+      ].join(";");
+
+      const body = c.layout === "grid" ? gridHtml(rows, g, c) : linesHtml(rows, g, c, mode);
+      const footer = c.memoFooter ? '<footer class="memo" style="height:18mm">느낀 점 한 줄</footer>' : "";
+
+      return `<article class="${classes}" style="${vars}">
+        ${headerHtml(c, pageIndex, total)}
+        <div class="sheet-body ${c.layout === "grid" ? "is-grid" : ""}" style="height:${g.areaH}mm">${body}</div>
+        ${footer}
+      </article>`;
+    }
+
+    /* ---------- 화면 반영 ---------- */
+    function applyUi(c, g) {
+      const isGrid = c.layout === "grid";
+      document.querySelectorAll(".only-grid").forEach((el) => el.classList.toggle("hidden", !isGrid));
+      document.querySelectorAll(".only-lines").forEach((el) => el.classList.toggle("hidden", isGrid));
+
+      const splitOpt = [...$("writeMode").options].find((o) => o.value === "split");
+      splitOpt.disabled = isGrid;
+      if (isGrid && c.writeMode === "split") $("writeMode").value = "pattern";
+      $("patternBox").classList.toggle("hidden", c.writeMode !== "pattern" && !(isGrid && c.writeMode === "split"));
+
+      const pickDate = c.dateMode === "pick";
+      $("dateValue").disabled = !pickDate;
+
+      $("fontSizeValue").textContent = c.fontSize;
+      $("fontSizeLineValue").textContent = c.fontSizeLine;
+      $("fontSize").disabled = c.fontAuto;
+      $("fontSizeLine").disabled = c.fontAuto;
+      $("circleSizeValue").textContent = c.circleSize;
+      $("circleOpacityValue").textContent = c.circleOpacity;
+
+      const family = c.fontSelect;
+      const preview = $("fontPreview");
+      preview.style.fontFamily = `"${family}", "NanumSquareRound", sans-serif`;
+      preview.style.color = c.textColor;
+
+      document.documentElement.style.setProperty("--sheet-w", `${g.w}mm`);
+      document.documentElement.style.setProperty("--sheet-h", `${g.h}mm`);
+      $("pageStyle").textContent = `@page { size: ${g.w}mm ${g.h}mm; margin: 0; }`;
     }
 
     function render() {
-      const maxChars = getMaxChars();
-      state.practiceText.maxLength = maxChars;
+      const c = readSettings();
+      const g = geometry(c);
+      applyUi(c, g);
 
-      if (state.practiceText.value.length > maxChars) {
-        state.practiceText.value = state.practiceText.value.slice(0, maxChars);
-      }
+      const sizePt = glyphSize(c, g);
+      const result = buildPages(c, g, sizePt);
+      const total = result.pages.length;
 
-      count.textContent = state.practiceText.value.length;
-      maxCount.textContent = maxChars;
+      $("count").textContent = Array.from(c.practiceText).filter((ch) => ch !== "\n").length;
+      const layoutInfo = c.layout === "grid"
+        ? `한 장 ${g.cols}열 × ${g.gridRows}행 (${g.cols * g.gridRows}칸)`
+        : `한 장 ${g.lineRows}줄`;
+      $("pageInfo").textContent = `총 ${total}장 · ${layoutInfo}${result.truncated ? ` · ${MAX_PAGES}장까지만 표시` : ""}`;
 
-      document.documentElement.style.setProperty("--guide", state.guideColor.value);
-      document.documentElement.style.setProperty("--circle-size", `${state.circleSize.value}%`);
-      document.documentElement.style.setProperty("--circle-opacity", `${Number(state.circleOpacity.value) / 100}`);
-      circleSizeValue.textContent = state.circleSize.value;
-      circleOpacityValue.textContent = state.circleOpacity.value;
+      sheetsEl.innerHTML = result.pages
+        .map((rows, i) => sheetHtml(c, g, rows, i, total, result.mode, sizePt))
+        .join("");
 
-      applyFont();
-      renderSheets();
+      saveJson(STORE_KEY, c);
     }
 
-    Object.values(state).forEach((element) => {
-      element.addEventListener("input", render);
-      element.addEventListener("change", render);
+    let renderQueued = false;
+    function scheduleRender() {
+      if (renderQueued) return;
+      renderQueued = true;
+      requestAnimationFrame(() => {
+        renderQueued = false;
+        render();
+      });
+    }
+
+    /* ---------- 칸 크기 단위/정사각형/프리셋 ---------- */
+    let lastUnit = $("cellUnit").value;
+    const round = (v, d = 2) => Math.round(v * 10 ** d) / 10 ** d;
+
+    function setCellMm(wMm, hMm) {
+      const f = UNIT_MM[$("cellUnit").value];
+      $("cellW").value = round(wMm / f);
+      $("cellH").value = round(hMm / f);
+    }
+
+    function updateUnitStep() {
+      const unit = $("cellUnit").value;
+      $("cellW").step = UNIT_STEP[unit];
+      $("cellH").step = UNIT_STEP[unit];
+    }
+
+    $("cellUnit").addEventListener("change", () => {
+      const unit = $("cellUnit").value;
+      const from = UNIT_MM[lastUnit];
+      $("cellW").value = round(num($("cellW").value, 17.8) * from / UNIT_MM[unit]);
+      $("cellH").value = round(num($("cellH").value, 17.8) * from / UNIT_MM[unit]);
+      lastUnit = unit;
+      updateUnitStep();
     });
 
-    document.getElementById("printBtn").addEventListener("click", () => {
+    $("cellW").addEventListener("input", () => { if ($("cellSquare").checked) $("cellH").value = $("cellW").value; });
+    $("cellH").addEventListener("input", () => { if ($("cellSquare").checked) $("cellW").value = $("cellH").value; });
+    $("cellSquare").addEventListener("change", () => { if ($("cellSquare").checked) $("cellH").value = $("cellW").value; });
+
+    $("cellPreset").addEventListener("change", () => {
+      const preset = $("cellPreset").value;
+      if (!preset) return;
+      const g = geometry(readSettings());
+      if (preset === "basic") {
+        setCellMm(17.8, 17.8);
+        $("cellSquare").checked = true;
+        $("writeMode").value = "pattern";
+        $("traceRows").value = 1;
+        $("blankRows").value = 0;
+        $("indent").checked = false;
+      } else if (preset === "big") {
+        setCellMm(25, 25);
+        $("cellSquare").checked = true;
+      } else if (preset === "small") {
+        setCellMm(12, 12);
+        $("cellSquare").checked = true;
+      } else if (preset === "manuscript") {
+        const size = Math.floor(g.areaW / 20 * 10) / 10;
+        setCellMm(size, size);
+        $("cellSquare").checked = true;
+        $("writeMode").value = "pattern";
+        $("traceRows").value = 0;
+        $("blankRows").value = 1;
+        $("indent").checked = true;
+        $("fontAuto").checked = true;
+      }
+      $("layout").value = "grid";
+      $("cellPreset").value = "";
+    });
+
+    /* ---------- 프리셋 저장 ---------- */
+    function refreshPresetList(selected) {
+      const presets = loadJson(PRESET_KEY, {});
+      const names = Object.keys(presets);
+      $("presetList").innerHTML = names.length
+        ? names.map((n) => `<option value="${esc(n)}">${esc(n)}</option>`).join("")
+        : '<option value="">저장된 프리셋 없음</option>';
+      if (selected && names.includes(selected)) $("presetList").value = selected;
+    }
+
+    $("presetSave").addEventListener("click", () => {
+      const name = $("presetName").value.trim();
+      if (!name) { $("presetName").focus(); return; }
+      const presets = loadJson(PRESET_KEY, {});
+      const s = readSettings();
+      delete s.practiceText;
+      presets[name] = s;
+      saveJson(PRESET_KEY, presets);
+      refreshPresetList(name);
+    });
+
+    $("presetLoad").addEventListener("click", () => {
+      const presets = loadJson(PRESET_KEY, {});
+      const s = presets[$("presetList").value];
+      if (!s) return;
+      writeSettings(s);
+      lastUnit = $("cellUnit").value;
+      updateUnitStep();
+      render();
+    });
+
+    $("presetDelete").addEventListener("click", () => {
+      const presets = loadJson(PRESET_KEY, {});
+      delete presets[$("presetList").value];
+      saveJson(PRESET_KEY, presets);
+      refreshPresetList();
+    });
+
+    /* ---------- 파일 불러오기 / 인쇄 / 초기화 ---------- */
+    $("textFile").addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      file.arrayBuffer().then((buf) => {
+        let text;
+        try {
+          text = new TextDecoder("utf-8", { fatal: true }).decode(buf);
+        } catch (e) {
+          text = new TextDecoder("euc-kr").decode(buf);
+        }
+        $("practiceText").value = text.replace(/^﻿/, "");
+        event.target.value = "";
+        render();
+      });
+    });
+
+    $("printBtn").addEventListener("click", () => {
       document.fonts.ready.then(() => window.print());
     });
 
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      state.title.value = "하루 한 장 바른 글씨";
-      state.school.value = "휘웅초";
-      state.grade.value = "1";
-      state.classNum.value = "1";
-      state.pageCount.value = "1";
-      state.practiceText.value = "가나다라마바사아자차카타파하";
-      state.fontSelect.value = "GangwonEduAllOTFBold|400";
-      state.fontSize.value = "24";
-      document.getElementById("fontSizeNumber").value = "24";
-      state.crossGuide.checked = true;
-      state.circleGuide.checked = true;
-      state.guideColor.value = "#a4a8ad";
-      state.circleSize.value = "68";
-      state.circleOpacity.value = "90";
-      state.copyMode.checked = true;
+    $("resetBtn").addEventListener("click", () => {
+      writeSettings(DEFAULTS);
+      lastUnit = $("cellUnit").value;
+      updateUnitStep();
       render();
     });
 
-    state.fontSize.addEventListener("input", () => {
-      document.getElementById("fontSizeNumber").value = state.fontSize.value;
+    FIELDS.forEach((id) => {
+      $(id).addEventListener("input", scheduleRender);
+      $(id).addEventListener("change", scheduleRender);
     });
 
-    document.getElementById("fontSizeNumber").addEventListener("input", (event) => {
-      const value = Math.min(32, Math.max(12, Number(event.target.value) || 24));
-      state.fontSize.value = String(value);
-      event.target.value = String(value);
-      render();
-    });
-
-    document.fonts.ready.then(render);
+    /* ---------- 시작 ---------- */
+    const saved = loadJson(STORE_KEY, null);
+    if (saved) writeSettings(saved);
+    lastUnit = $("cellUnit").value;
+    updateUnitStep();
+    refreshPresetList();
     render();
+    document.fonts.ready.then(render);
   </script>
 </body>
 </html>
