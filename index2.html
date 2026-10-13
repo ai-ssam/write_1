@@ -1918,6 +1918,12 @@
       let quick = [];
 
       const stash = () => store.append(...Object.values(S));
+      // 화면에서 빠지는 설정 영역이 문서 밖으로 사라지지 않게, 먼저 모두 보관소로 되돌린 뒤 보여 줄 것만 꺼낸다.
+      // (문서 밖으로 나가면 id로 요소를 찾지 못해 미리보기 갱신이 중간에 멈춘다)
+      const mount = (container, keys) => {
+        stash();
+        container.replaceChildren(...secsOf(keys));
+      };
       const secsOf = (keys) => keys.map((k) => S[k]);
       const makeStage = () => { const st = h("main", "stage"); st.append(sheets); return st; };
 
@@ -1993,7 +1999,7 @@
         const open = (k) => {
           rail.querySelectorAll(".rtab").forEach((b) => b.classList.toggle("on", b.dataset.k === k));
           title.textContent = GROUPS[k].label;
-          body.replaceChildren(...secsOf(GROUPS[k].secs));
+          mount(body, GROUPS[k].secs);
           body.scrollTop = 0;
           save("write1.v2.tabA", k);
         };
@@ -2047,7 +2053,7 @@
             b.classList.toggle("on", n === cur);
             b.classList.toggle("done", n < cur);
           });
-          body.replaceChildren(...secsOf(STEPS[cur].secs));
+          mount(body, STEPS[cur].secs);
           body.scrollTop = 0;
           prev.disabled = cur === 0;
           const last = cur === STEPS.length - 1;
@@ -2161,7 +2167,7 @@
         });
         const open = (k) => {
           pills.querySelectorAll(".pill").forEach((b) => b.classList.toggle("on", b.dataset.k === k));
-          body.replaceChildren(...secsOf(GROUPS[k].secs));
+          mount(body, GROUPS[k].secs);
           body.scrollTop = 0;
         };
         pills.addEventListener("click", (e) => { const b = e.target.closest(".pill"); if (b) open(b.dataset.k); });
@@ -2196,7 +2202,7 @@
           tabbar.querySelectorAll(".btab").forEach((b) => b.classList.toggle("on", !close && b.dataset.k === k));
           sheet.classList.toggle("open", !close);
           if (!close) {
-            body.replaceChildren(...secsOf(GROUPS[k].secs));
+            mount(body, GROUPS[k].secs);
             body.scrollTop = 0;
           }
         };
