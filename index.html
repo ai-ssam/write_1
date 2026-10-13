@@ -1349,10 +1349,10 @@
     function scheduleRender() {
       if (renderQueued) return;
       renderQueued = true;
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         renderQueued = false;
         render();
-      });
+      }, 20);
     }
 
     /* ---------- 칸 크기 단위/정사각형/프리셋 ---------- */
